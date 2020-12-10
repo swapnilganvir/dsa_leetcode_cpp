@@ -1,0 +1,23 @@
+class Solution {
+public:
+    void duplicateZeros(vector<int>& arr) {
+        int a=arr.size(),j=0;
+        vector<int> temp;
+        for(int i=0;i<a;i++){
+            if(arr[i]!=0){
+                temp.push_back(arr[i]);
+                j++;
+            }
+            else{
+                temp.push_back(arr[i]);
+                temp.push_back(0);
+                j+=2;
+            }
+            if(j>a-1) break;
+        }
+        arr.clear();
+        for(int i=0;i<a;i++){
+            arr.push_back(temp[i]);
+        }
+    }
+};

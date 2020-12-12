@@ -2,7 +2,7 @@ class Solution {
 public:
     int mySqrt(int x) {
         float mid,l=0,r=x;
-        while(l<=r){
+        while(l<=r){            //INCOMPLETE CODE
             mid=(l+r)/2;
             int t=mid*mid;
             if(t==x) return mid;

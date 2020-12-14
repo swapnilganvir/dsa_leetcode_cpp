@@ -1,0 +1,43 @@
+class Solution {
+    int search(vector<int> arr, int x){
+        int mid,l=0,r=arr.size()-1;
+        while(l<=r){
+            mid=l+(r-l)/2;
+            if(arr[mid]==x) return mid;                        // INCOMPLETE //////////
+            if(arr[mid]>x) r=mid-1;
+            else l=mid+1;
+        }
+        return -1;
+    }
+public:
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        int s=arr.size();
+        vector<int> v;
+        if(k==s) return arr;
+        if(x<=arr[0]){
+            for(int i=0;i<k;i++){
+                    v.push_back(arr[i]);
+            }
+            return v;
+        }
+        else if(x>=arr[s-1]){
+            for(int i=s-k;i<s;i++){
+                    v.push_back(arr[i]);
+            }
+            return v;
+        }
+        else{
+            int t=search(arr,x);
+            if(t<0) t=0;
+            int low=max(0,t-k-1),high=min(s-1,t+k-1);
+            while(high-low>k-1){
+                if(low< 0 ||(x-arr[low])<=(arr[high]-x)) high--;
+                else if(high>s-1 || (x-arr[low])>(arr[high]-x)) low++;
+            }
+            for(int i=low;i<high+1;i++){
+                v.push_back(arr[i]);
+            }
+            return v;
+        }
+    }
+};

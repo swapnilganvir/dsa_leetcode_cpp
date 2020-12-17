@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> findDiagonalOrder(vector<vector<int>>& matrix) {
+        vector<int> v;
+        if(matrix.size()==0) return v;
+        int M=matrix.size(),N=matrix[0].size();
+        int row=0,column=0;
+        int dir=1;
+        while(row<M && column<N){
+            v.push_back(matrix[row][column]);
+            
+            int new_r=row+(dir==1 ? -1:1 );
+            int new_c=column+(dir==1 ? 1:-1);
+            
+            if(new_r<0 || new_r==M || new_c<0 || new_c==N){
+                if(dir==1){
+                    row+=(column==N-1 ? 1:0);
+                    column+=(column<N-1 ? 1:0);
+                }
+                else{
+                    column+=(row==M-1 ? 1:0);
+                    row+=(row<M-1 ? 1:0);
+                }
+                dir=1-dir;
+            }
+            else{
+                row=new_r;
+                column=new_c;
+            }
+        }
+        return v;
+    }
+};

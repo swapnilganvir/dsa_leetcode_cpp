@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int arrayPairSum(vector<int>& nums) {
+        vector<int> v(20001,0);
+        int s=nums.size(),sum=0,d=0;
+        for(int n:nums) v[n+10000]++;
+        for (int i = -10000; i <= 10000; i++) {
+            sum += (v[i + 10000] + 1 - d) / 2 * i;
+            d = (2 + v[i + 10000] - d) % 2;
+        }
+        return sum;
+    }
+};

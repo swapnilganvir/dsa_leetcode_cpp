@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<int> stk;
+        int a,b;
+        for(string str:tokens){
+            if(str=="+"||str=="-"||str=="*"||str=="/"){
+                b=stk.top(); stk.pop();
+                a=stk.top(); stk.pop();
+                switch(str[0]){
+                    case '+': 
+                        stk.push(a+b);
+                        break;
+                    case '-': 
+                        stk.push(a-b);
+                        break;
+                    case '*': 
+                        stk.push(a*b);
+                        break;
+                    case '/': 
+                        stk.push(a/b);
+                        break;
+                }
+            }
+            else stk.push(stoi(str));
+        }
+        return stk.top();
+    }
+};

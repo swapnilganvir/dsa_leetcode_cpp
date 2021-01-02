@@ -9,6 +9,33 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+class Solution {    
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        if(root==NULL) return ans;
+        stack<TreeNode*> stk; 
+        TreeNode *curr=root,*prev=NULL;
+        while(curr || !stk.empty()){
+            while(curr){
+                stk.push(curr);
+                curr=curr->left;
+            }
+            while(curr==NULL && !stk.empty()){
+                curr=stk.top();
+                if(curr->right==NULL || curr->right==prev){
+                    ans.push_back(curr->val);
+                    stk.pop();
+                    prev=curr;
+                    curr=NULL;
+                }
+                else curr=curr->right;
+            }
+        }
+        return ans;
+    }
+};
+------------------------------------
 class Solution {
     vector<int> rev(vector<int> v){
         int t,j=v.size()-1;

@@ -1,0 +1,32 @@
+class Solution {
+public:
+    string decodeString(string s) {
+        string curr;
+        vector<int> nums;
+        vector<string> strs;
+        int n=0;
+        for(char c:s){
+            if(isdigit(c)){
+                n=n*10 + c-'0';
+            }
+            else if(isalpha(c)){
+                curr+=c;
+            }
+            else if(c=='['){
+                nums.push_back(n);
+                strs.push_back(curr);
+                n=0;
+                curr.clear();
+            }
+            else if(c==']'){
+                for(int i=0;i<nums.back();i++){
+                    strs.back()+=curr;
+                }
+                nums.pop_back();
+                curr=strs.back();
+                strs.pop_back();
+            }
+        }
+        return curr;
+    }
+};

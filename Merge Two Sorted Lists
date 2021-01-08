@@ -12,7 +12,7 @@ class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
         if(l1==NULL) return l2;
-        if(l2==NULL) return l1;
+        if(l2==NULL) return l1;                //RECURSIVE //
         ListNode *result=NULL;
         if(l1->val <= l2->val){
             result=l1;
@@ -23,5 +23,30 @@ public:
             result->next=mergeTwoLists(l2->next,l1);
         }
         return result;
+    }
+};
+-----------------
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if(l1==NULL) return l2;
+        if(l2==NULL) return l1;
+        ListNode *head=new ListNode(0);
+        ListNode *result=head;
+        while(l1 && l2){
+            if(l1->val <= l2->val){
+                result->next=l1;
+                result=result->next;
+                l1=l1->next;
+            }
+            else{
+                result->next=l2;
+                result=result->next;
+                l2=l2->next;
+            }
+        }
+        if(l2) result->next=l2;
+        else result->next=l1;
+        return head->next;
     }
 };

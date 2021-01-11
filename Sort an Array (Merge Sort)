@@ -1,0 +1,44 @@
+class Solution {
+public:
+    vector<int> gnums;
+    vector<int> ans;
+    void merge(int l,int r){
+        int m=(l+r)/2;
+        int i=l,j=m+1,k=l;
+        while(i<=m && j<=r){
+            if(gnums[i]<=gnums[j]){
+                ans[k]=gnums[i];
+                i++;
+            }
+            else{
+                ans[k]=gnums[j];
+                j++;
+            }
+            k++;
+        }
+        int temp=i>m ? j:i;
+        while(k<=r){
+            ans[k]=gnums[temp];
+            temp++;
+            k++;
+        }
+        for(int i=l;i<=r;i++) gnums[i]=ans[i];
+    }
+    void mergeSort(int l,int r){
+        if(l>=r){
+            return;//returns recursively
+        }
+        int m = (l+r)/2;
+        mergeSort(l,m);
+        mergeSort(m+1,r);
+        merge(l,r);
+    }
+    vector<int> sortArray(vector<int>& nums) {
+        for(int i=0;i<nums.size();i++){
+            gnums.push_back(nums[i]);
+            ans.push_back(0);
+        }
+        mergeSort(0,nums.size()-1);
+        return gnums;
+    }
+};

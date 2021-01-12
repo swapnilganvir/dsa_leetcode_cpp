@@ -1,0 +1,57 @@
+class Solution {
+private:
+    map<pair<int,int>,int> mp;
+    int n;
+public:
+    void remove(int r, int c){
+        for(int i=0;i<n;i++){
+            mp[{r,i}]++;
+            mp[{i,c}]++;
+        }
+        mp[{r,c}]--;
+        int dir[4][2]={{1,1},{-1,-1},{1,-1},{-1,1}};
+        for(int k=0;k<4;k++){
+            int i=r+dir[k][0];
+            int j=c+dir[k][1];
+            while(i>=0 && i<n && j<n && j>=0){
+                mp[{i,j}]++;
+                i+=dir[k][0];
+                j+=dir[k][1];
+            }
+        }
+    }
+    void place(int r, int c){
+        for(int i=0;i<n;i++){
+            mp[{r,i}]--;
+            mp[{i,c}]--;
+        }
+        mp[{r,c}]++;
+        int dir[4][2]={{1,1},{-1,-1},{1,-1},{-1,1}};
+        for(int k=0;k<4;k++){
+            int i=r+dir[k][0];
+            int j=c+dir[k][1];
+            while(i>=0 && i<n && j<n && j>=0){
+                mp[{i,j}]--;
+                i+=dir[k][0];
+                j+=dir[k][1];
+            }
+        }
+    }
+    int backT(int r,int cnt){
+        for(int i=0;i<n;i++){
+            if(mp[{r,i}]==0){
+                place(r,i);
+                if(r+1==n) cnt++;
+                else{
+                    cnt=backT(r+1, cnt);
+                }
+                remove(r,i);
+            }
+        }
+        return cnt;
+    }
+    int totalNQueens(int n1) {
+        n=n1;
+        return backT(0,0);
+    }
+};

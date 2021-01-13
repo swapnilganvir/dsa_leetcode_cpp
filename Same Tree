@@ -1,0 +1,46 @@
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(p==NULL && q==NULL) return true;
+        if(p==NULL || q==NULL) return false;
+        if(p->val != q->val) return false;
+        return isSameTree(p->left,q->left) && isSameTree(p->right,q->right);
+    }
+};
+--------------
+
+class Solution {
+public:
+    bool check(TreeNode* p, TreeNode* q){
+        if(p==NULL && q==NULL) return true;
+        if(p==NULL || q==NULL) return false;
+        if(p->val != q->val) return false;
+        return true;
+    }
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(p==NULL && q==NULL) return true;
+        if(!check(p,q)) return false;
+        queue<TreeNode*> p1;
+        queue<TreeNode*> q1;
+        p1.push(p);
+        q1.push(q);
+        while(!p1.empty()){
+            TreeNode* pp=p1.front();
+            p1.pop();
+            TreeNode* qq=q1.front();
+            q1.pop();
+            if(!check(pp,qq)) return false;
+            if(!check(pp->left,qq->left)) return false;
+            if(pp->left){
+                p1.push(pp->left);
+                q1.push(qq->left);
+            }
+            if(!check(pp->right,qq->right)) return false;
+            if(pp->right){
+                p1.push(pp->right);
+                q1.push(qq->right);
+            }
+        }
+        return true;
+    }
+};

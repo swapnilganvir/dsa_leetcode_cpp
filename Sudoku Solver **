@@ -1,0 +1,38 @@
+class Solution {
+public:
+    map<pair<int, int>, int> mpr,mpc;
+    void mapping(vector<vector<char>>& board){
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                char c=board[i][j];
+                if(c!='.'){
+                    mpr[{i+1,c-'0'}]=1;
+                    mpc[{j+1,c-'0'}]=1;
+                }
+            }
+        }
+        while(){
+            
+            for(int i=a;i<b;i++){
+                for(int j=a;j<b;j++)
+            }
+        }
+    }
+    bool is_Valid(int val, int r, int c){
+        if(mpr[{r,val}]==0 && mpc[{c,val}]==0)
+    }
+    void backT(vector<vector<char>>& board, int r){
+        if(r==9) return;
+        for(int i=0;i<9;i++){
+            if(board[r][i]=='.'){
+                for(int k=1;k<10;k++){
+                    if(is_Valid(k,r+1,i+1))
+                }
+            }
+        }
+    }
+    void solveSudoku(vector<vector<char>>& board) {
+        mapping(board);
+        backT(board,0);
+    }
+};

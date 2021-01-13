@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<string> v;
+    void gen(string s, int f, int e){
+        if(e==0){
+            v.push_back(s);
+            return;
+        }
+        if(f>0){
+            gen(s+"(", f-1, e);
+        }
+        if(e-f>0){
+            gen(s+")", f, e-1);
+        }
+    }
+    vector<string> generateParenthesis(int n) {
+        gen("(",n-1,n);
+        return v;
+    }
+};

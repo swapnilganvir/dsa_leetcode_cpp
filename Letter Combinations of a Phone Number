@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<string> v;
+    map<char, string> mp;
+    void mapping(){
+        mp['2']="abc";
+        mp['3']="def";
+        mp['4']="ghi";
+        mp['5']="jkl";
+        mp['6']="mno";
+        mp['7']="pqrs";
+        mp['8']="tuv";
+        mp['9']="wxyz";
+    }
+    void backT(string com, string nextd){
+        if(nextd.size()==0){
+            v.push_back(com);
+            return;
+        }
+        char digit=nextd[0];
+        string se=mp[digit];
+        for(int i=0; i<se.size();i++){
+            char c=se[i];
+            backT(com+c, nextd.substr(1));
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        mapping();
+        if(digits.size()!=0) backT("", digits);
+        return v;
+    }
+};

@@ -1,0 +1,18 @@
+class Solution {
+public:
+    bool isHappy(int n) {
+        unordered_set<int> s;
+        int k,ans=n;
+        while(ans != 1 && s.count(ans) < 1){
+            s.insert(ans);
+            k=ans;
+            ans=0;
+            while(k){
+                ans+=(k%10)*(k%10);
+                k/=10;
+            }
+        }
+        if(ans==1) return true;
+        return false;
+    }
+};

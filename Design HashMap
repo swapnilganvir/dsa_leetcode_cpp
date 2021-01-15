@@ -1,9 +1,9 @@
 class MyHashMap {
 public:
-    vector<int> v;
+    int v[1000001] = { [0 ... 1000000] = -1 };
     /** Initialize your data structure here. */
     MyHashMap() {
-        v.resize(1000001, -1);
+        
     }
     
     /** value will always be non-negative. */

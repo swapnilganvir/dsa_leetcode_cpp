@@ -1,0 +1,81 @@
+class Solution {
+public:
+    vector<int> postorder(Node* root) {
+        vector<int> answer;
+        if(root == NULL) return answer;
+        stack<pair<Node*,int>> s;
+        s.push({root, 0});
+        
+        while(!s.empty()){
+            auto [node, index] = s.top();
+            s.pop();
+            if (index < (node->children).size()) {
+                s.push({node, index+1});
+                s.push({node->children[index], 0});
+            }
+            else {
+                answer.push_back(node->val);
+            }
+        }
+        return answer;
+    }
+};
+-----------------------------------
+class Solution {
+public:
+    vector<int> postorder(Node* curr) {
+        vector<int> v;
+        stack<pair<Node*, int>> stk;
+        int i=0;
+        while(curr || !stk.empty()){
+            while(curr){
+                stk.push({curr, i});
+                i=0;
+                if(curr->children.size() > 0){
+                    curr=curr->children[0];
+                }
+                else{
+                    v.push_back(curr->val);
+                    i=stk.top().second;
+                    stk.pop();
+                    curr=NULL;
+                }
+            }
+            while(curr == NULL && !stk.empty()){
+                curr=stk.top().first;
+                i++;
+                if(curr->children.size() > i){
+                    curr=curr->children[i];
+                }
+                else{
+                    v.push_back(curr->val);
+                    i=stk.top().second;
+                    stk.pop();
+                    curr=NULL;
+                }
+            }
+        }
+        return v;
+    }
+};
+----------------------------------
+class Solution {
+public:
+    vector<int> v;
+    void r(Node* root){
+        if(root->children.empty()){
+            v.push_back(root->val);
+            return;
+        }
+        else{
+            for(auto node : root->children){
+                r(node);
+            }
+            v.push_back(root->val);
+        }
+    }
+    vector<int> postorder(Node* root) {
+        if(root) r(root);
+        return v;
+    }
+};

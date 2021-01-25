@@ -11,19 +11,22 @@
  */
 class Solution {
 public:
-    void test(TreeNode* root, long low, long high, bool& ans){
-        if(root==NULL) return;
-        if(root->val<=low || root->val>=high){
-            ans=false;
-            return;
+    bool isValidBST(TreeNode* root){
+        stack<TreeNode*> stk;
+        TreeNode *prev = NULL, *curr = root;
+        while (curr !=NULL || !stk.empty())
+        {
+            while(curr != NULL){
+                stk.push(curr);
+                curr = curr->left;
+            }
+            curr = stk.top();
+            stk.pop();
+            if(prev && curr->val <= prev->val)
+                return false;
+            prev = curr;
+            curr = curr->right;
         }
-        if(ans) test(root->left, low, root->val, ans);
-        if(ans) test(root->right, root->val, high, ans);
-    }
-    bool isValidBST(TreeNode* root) {
-        if(root==NULL) return true;
-        bool ans=true;
-        test(root, LONG_MIN, LONG_MAX, ans);
-        return ans;
+        return true;
     }
 };

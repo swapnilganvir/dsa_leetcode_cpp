@@ -22,16 +22,9 @@ public:
 class Solution {
 public:
     TreeNode* searchBST(TreeNode* root, int val) {
-        if(root==NULL || root->val==val) return root;
-        queue<TreeNode*> q;
-        q.push(root);
-        while(!q.empty()){
-            TreeNode *fr=q.front();
-            if(fr->val==val) return fr;
-            q.pop();
-            if(fr->left) q.push(fr->left);
-            if(fr->right) q.push(fr->right);
+        while(root != nullptr && root->val != val) {
+            root = (val < root->val) ? root->left : root->right;
         }
-        return NULL;
+        return root;
     }
 };

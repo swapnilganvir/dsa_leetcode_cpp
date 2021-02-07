@@ -30,3 +30,20 @@ public:
         return true;
     }
 };
+-----------------------
+class Solution {
+public:
+    bool isValidBST(TreeNode* root, long int minVal, long int maxVal){
+        if(!root)
+            return true;
+        if(root->val <= minVal || root->val >= maxVal)
+            return false;
+        return isValidBST(root->left, minVal, root->val) && isValidBST(root->right, root->val, maxVal);
+    }
+    bool isValidBST(TreeNode* root) {
+        if(!root){
+            return true;
+        }
+        return isValidBST(root->left, LONG_MIN, root->val) && isValidBST(root->right, root->val, LONG_MAX);
+    }
+};

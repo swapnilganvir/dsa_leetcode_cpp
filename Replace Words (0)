@@ -1,0 +1,46 @@
+class Trynode {
+public:
+    bool isEnd;
+    string s;
+    Trynode* children[26] = {};
+    Trynode (){
+        isEnd = false;
+        s = "";
+    }
+};
+class Solution {
+private:
+    string search(Trynode* node, string word){
+        for (char c : word){
+            if (node->children[c-'a'] == NULL)
+                return word;
+            node = node->children[c-'a'];
+            if (node->isEnd)
+                return node->s;
+        }
+        return word;
+    }
+public:
+    string replaceWords(vector<string>& dictionary, string sentence) {
+        Trynode* root = new Trynode();
+        Trynode* curr = root;
+        string ans;
+        for(auto str : dictionary){
+            for (char c : str) {
+                if (curr->children[c - 'a'] == NULL) {
+                    curr->children[c - 'a'] = new Trynode;
+                }
+                curr = curr->children[c - 'a'];
+            }
+            curr->isEnd = true;
+            curr->s = str;
+            curr = root;
+        }
+        istringstream words(sentence);
+        string word;
+        while (words >> word){
+            ans += search(root, word) + ' ';
+        }
+        return ans.substr(0, ans.size()-1);
+    }
+};

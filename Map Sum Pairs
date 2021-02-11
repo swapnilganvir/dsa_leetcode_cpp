@@ -1,0 +1,53 @@
+class Trynode{
+public:
+    Trynode* children[26] = {};
+    vector<string> s;
+    Trynode() {}
+};
+class MapSum {
+    Trynode* root;
+    unordered_map<string, int> mp;
+public:
+    /** Initialize your data structure here. */
+    MapSum() {
+        root = new Trynode();
+    }
+    
+    void insert(string key, int value) {
+        Trynode* node = root;
+        if(mp[key]){
+            mp[key] = value;
+            return;
+        }
+        mp[key] = value;
+        for (char c : key) {
+            if (node->children[c - 'a'] == NULL) {
+                node->children[c - 'a'] = new Trynode;
+            }
+            node = node->children[c - 'a'];
+            node->s.push_back(key);
+        }
+    }
+    
+    int sum(string prefix) {
+        Trynode* node = root;
+        int s = 0;
+        for (char c : prefix) {
+            if (node->children[c - 'a'] == NULL) return 0;
+            else{
+                node = node->children[c - 'a'];
+            }
+        }
+        for(auto it : node->s){
+            s += mp[it];
+        }
+        return s;
+    }
+};
+
+/**
+ * Your MapSum object will be instantiated and called as such:
+ * MapSum* obj = new MapSum();
+ * obj->insert(key,val);
+ * int param_2 = obj->sum(prefix);
+ */

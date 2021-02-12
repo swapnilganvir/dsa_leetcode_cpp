@@ -1,0 +1,59 @@
+class Trie{
+public:
+    Trie* child[2] = {};
+    Trie(){
+        
+    }
+};
+class Solution {
+private:
+    vector<Trie> pool;
+public:
+    Trie * allocate(){
+        pool.push_back(Trie());
+        return &pool.back();
+    }
+    
+    int findMaximumXOR(vector<int>& nums) {
+        int maxVal = nums[0];
+        for(int i : nums){
+            maxVal = max (maxVal, i);
+        }
+        if(maxVal == 0) return 0;
+        int maskLen = sizeof(int) * 8 - __builtin_clz(maxVal);
+        pool.reserve(maskLen * nums.size() * 2);
+        Trie* trie = allocate();
+        int mxor = 0;
+        for (int val : nums) {
+            Trie *node = trie, *xorNode = trie;
+            int cxor = 0, len = maskLen;
+            while(len){
+                int bit = (val & (1 << (len - 1))) != 0 ? 1  : 0;
+                //val = val >> 1;
+                if (node->child[bit]) {
+                    node = node->child[bit];
+                } else {
+                    Trie * newNode = allocate();
+                    node->child[bit] = newNode;
+                    node = newNode;
+                }
+                
+                int tbit = (~bit & 1);
+            
+                if (xorNode->child[tbit]) { 
+                    cxor = (cxor << 1) | 1;
+                    xorNode = xorNode->child[tbit];
+                } else {
+                    cxor <<= 1;
+                    if (!xorNode->child[bit]) {
+                        xorNode->child[bit] = allocate();
+                    }
+                    xorNode =  xorNode->child[bit];
+                }
+                len--;
+            }
+            mxor = max(mxor, cxor);
+        }
+        return mxor;
+    }
+};

@@ -1,0 +1,32 @@
+class WordDictionary {
+private:
+    unordered_map<int, unordered_set<string>> mp;
+public:
+    /** Initialize your data structure here. */
+    WordDictionary() {
+        
+    }
+    
+    void addWord(string word) {
+        mp[word.size()].insert(word);
+    }
+    
+    bool search(string word) {
+        for(auto &curr : mp[word.size()]){
+            int k = 0;
+            for(; k < word.size(); k++){
+                if (word[k] == '.' || curr[k] == word[k]) continue;
+                else break;
+            }
+            if(k == word.size()) return true;
+        }
+        return false;
+    }
+};
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary* obj = new WordDictionary();
+ * obj->addWord(word);
+ * bool param_2 = obj->search(word);
+ */

@@ -1,12 +1,17 @@
 class Solution {
 public:
     int findMin(vector<int>& nums) {
-        int x=nums.size(),min=nums[0];
-        for(int i=1;i<x;i++){
-            if(nums[i]<=min){
-                min=nums[i];
-            }
+        int mid, l = 0, s = nums.size(), h = s-1;
+        int next, prev;
+        while(l <= h){
+            if(nums[l] <= nums[h]) return nums[l];
+            mid = (l + h)/2;
+            next = (mid + s + 1) % s;
+            prev = (mid + s - 1) % s;
+            if(nums[mid] < nums[next] && nums[mid] < nums[prev]) return nums[mid];
+            if(nums[mid] <= nums[h]) h = mid - 1;
+            else if(nums[mid] >= nums[l]) l = mid + 1;
         }
-        return min;
+        return -1;
     }
 };

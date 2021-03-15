@@ -1,41 +1,32 @@
 class Solution {
 public:
     vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
-        sort(nums1.begin(), nums1.end());
-        sort(nums2.begin(), nums2.end());
+        unordered_set<int> vis;
         vector<int> v;
-        int i1=0,i2=0;
-        while(i1 < nums1.size() && i2 < nums2.size()){
-            if(nums1[i1]==nums2[i2]){
-                if(v.size()==0 || nums1[i1]!=v.back()){
-                    v.push_back(nums1[i1]);
-                }
-                i1++;
-                i2++;
+        for(auto val : nums2){
+            if(find(nums1.begin(), nums1.end(), val)!=nums1.end() && vis.count(val) <= 0){
+                v.push_back(val);
+                vis.insert(val);
             }
-            else if(nums1[i1] < nums2[i2]) i1++;
-            else i2++;
         }
         return v;
     }
 };
--------------------------
+---------------
+
 class Solution {
 public:
     vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        unordered_set<int> s, vis;
         vector<int> v;
-        unordered_set<int> s;
-        unordered_set<int> s2;
-        for(int num : nums1){
-            s.insert(num);
+        for(auto val : nums1){
+            s.insert(val);
         }
-        for(int n2 : nums2){
-            if(s.count(n2) > 0){
-                s2.insert(n2);
+        for(auto val : nums2){
+            if(s.count(val) > 0 && vis.count(val) <= 0){
+                v.push_back(val);
+                vis.insert(val);
             }
-        }
-        for(int ans : s2){
-            v.push_back(ans);
         }
         return v;
     }

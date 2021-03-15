@@ -1,5 +1,30 @@
 class Solution {
 public:
+    vector<int> dailyTemperatures(vector<int>& T) {
+        vector<int> ans(T.size(), 0);
+        int traceback;
+        for(int i = T.size()-2; i >= 0; i--){
+            traceback = 1;
+            while(true)
+            {
+                if(T[i] < T[i+traceback]){
+                    ans[i] = traceback;
+                    break;
+                }
+                if(ans[i+traceback] == 0){
+                    ans[i] = 0;
+                    break;
+                }
+                traceback += ans[i+traceback];
+            }
+        }
+        return ans;
+    }
+};
+----------
+
+class Solution {
+public:
     vector<int> dailyTemperatures(vector<int> const& t) {
         vector<int> days (t.size(), 0);
         for(int i = t.size()-2; i >= 0; i--){                       //without stack//
@@ -12,26 +37,5 @@ public:
             }
         }
         return days;
-    }
-};
-
-----------
-
-class Solution {
-public:
-    vector<int> dailyTemperatures(vector<int>& T) {
-        int s=T.size();
-        vector<int> ans(s);
-        if(s==1){
-            ans[0]=0;
-            return ans;
-        }
-        stack<int> stk;
-        for(int i=s-1; i>=0; i--){
-            while(!stk.empty() && T[i]>=T[stk.top()]) stk.pop();
-            ans[i]=stk.empty() ? 0:(stk.top()-i);
-            stk.push(i);
-        }
-        return ans;
     }
 };

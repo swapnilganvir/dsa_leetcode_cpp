@@ -1,0 +1,10 @@
+class Solution {
+public:
+    int findMin(vector<int>& nums){
+        int min_val = 5000;
+        for(auto n : nums){
+            min_val = min(min_val, n);
+        }
+        return min_val;
+    }
+};

@@ -5,19 +5,17 @@ public:
         stack<char> stk;
         for(char str : s){
             if(str == '(' || str == '[' || str == '{') stk.push(str);
+            else if(stk.empty()) return 0;
             else if(str == ')'){
-                if(stk.empty()) return 0;
-                else if(stk.top() == '(') stk.pop();
+                if(stk.top() == '(') stk.pop();
                 else return 0;
             }
             else if(str == ']'){
-                if(stk.empty()) return 0;
-                else if(stk.top() == '[') stk.pop();
+                if(stk.top() == '[') stk.pop();
                 else return 0;
             }
             else{
-                if(stk.empty()) return 0;
-                else if(stk.top() == '{') stk.pop();
+                if(stk.top() == '{') stk.pop();
                 else return 0;
             }
         }

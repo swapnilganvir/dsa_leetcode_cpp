@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<int> original;
+    Solution(vector<int>& nums){
+        original=nums;
+    }
+    
+    vector<int> reset(){
+        return original;
+    }
+    
+    void swap(vector<int>& ans,int i,int j){
+        int temp=ans[i];
+        ans[i]=ans[j];
+        ans[j]=temp;
+    }
+    
+    vector<int> shuffle(){
+        vector<int> ans=original;
+        for(int i=0;i<ans.size();i++){
+            swap(ans,i,rand()%original.size());
+        }
+        return ans;
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(nums);
+ * vector<int> param_1 = obj->reset();
+ * vector<int> param_2 = obj->shuffle();
+ */

@@ -1,3 +1,10 @@
+static const auto nptr = [] {
+  ios_base::sync_with_stdio (false);
+  cin.tie (nullptr);
+  return nullptr;
+} ();
+-------------------------OR-----------
+
 static const auto nptr = [] ()
 {
   ios_base::sync_with_stdio (false);      //optional-to improve speed//
@@ -5,7 +12,8 @@ static const auto nptr = [] ()
     
   return nullptr;
 } ();
------------------------------
+------------------------
+
 class Solution {
 public:
     int findCenter(vector<vector<int>>& edges) {
